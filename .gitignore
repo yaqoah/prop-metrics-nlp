@@ -1,0 +1,25 @@
+# Virtual Environment
+main/
+
+# Secret
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+
+# IDE
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+logs/
+
+# Checkpoints
+checkpoints/
+
+

@@ -1,0 +1,18 @@
+{
+  "scrape_date": "2025-07-17T19:38:31.622025",
+  "total_firms_attempted": 1,
+  "successful_firms": 1,
+  "total_reviews": 8281,
+  "scrapers_used": {
+    "Scrapy": 1
+  },
+  "firms": {
+    "TopStep": {
+      "success": true,
+      "reviews_count": 8281,
+      "pages_scraped": 450,
+      "scraper_used": "Scrapy",
+      "rating": 4.3
+    }
+  }
+}
