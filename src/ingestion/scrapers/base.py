@@ -3,7 +3,7 @@ from config.constants import RATE_LIMIT, USER_AGENTS
 import time
 from datetime import datetime
 import random
-from utils.logger import get_logger 
+from src.utils.logger import get_logger 
 from config.constants import USER_AGENTS 
 from middleware.proxy_rotator import Proxy_Rotator
 

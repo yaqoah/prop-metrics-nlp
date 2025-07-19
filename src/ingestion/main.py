@@ -7,7 +7,7 @@ import pandas as pd
 
 from scrapers_orchestrator import Scraper_Orchestrator
 from config.constants import FOREX_PROP_FIRMS, FUTURES_PROP_FIRMS, PARSED_DATA_PATH
-from utils.logger import get_logger
+from src.utils.logger import get_logger
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
