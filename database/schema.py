@@ -1,4 +1,6 @@
 SCHEMA_SQL = """
+-- Enable pgvector extension for embeddings
+CREATE EXTENSION IF NOT EXISTS vector;
 
 -- Processing queue table
 CREATE TABLE IF NOT EXISTS processing_queue (
@@ -65,9 +67,6 @@ CREATE TABLE IF NOT EXISTS reviews (
 -- Create indexes for performance
 CREATE INDEX idx_reviews_firm ON reviews(firm_name);
 CREATE INDEX idx_reviews_sentiment ON reviews(sentiment_score);
-CREATE INDEX idx_reviews_date ON reviews(review_date);
+CREATE INDEX idx_reviews_date ON reviews(date_posted);
 CREATE INDEX idx_reviews_topic ON reviews(primary_topic_id);
-
--- Enable pgvector extension for embeddings
-CREATE EXTENSION IF NOT EXISTS vector;
 """ 
