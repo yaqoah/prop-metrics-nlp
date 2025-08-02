@@ -1,7 +1,7 @@
 import sys
 import logging 
 from logging.handlers import RotatingFileHandler
-from ingestion.config.constants import LOG_FILE_PATH, LOG_MAX_SIZE, LOG_BACKUP_COUNT, LOG_LEVEL
+from utils.constants import LOG_FILE_PATH, LOG_MAX_SIZE, LOG_BACKUP_COUNT, LOG_LEVEL
 
 _loggers = {}
 
