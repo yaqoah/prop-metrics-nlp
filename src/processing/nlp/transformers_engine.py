@@ -1,3 +1,4 @@
+import torch
 from transformers import pipeline 
 from tqdm import tqdm 
 from src.utils.logger import get_logger
@@ -5,26 +6,29 @@ from src.utils.logger import get_logger
 
 class TransformersEngine:
     def __init__(self):
+        device = 0 if torch.cuda.is_available() else -1
         self.sentiment_analyzer = pipeline(
             "sentiment-analysis", 
             model="ProsusAI/finbert",
-            device= -1
+            device= device
         )
         self.emotion_analyzer = pipeline(
-            "text_classification",
+            "text-classification",
             model = "j-hartmann/emotion-english-distilroberta-base", 
-            device= -1,
+            device= device,
             return_all_scores=True
         )
         self.summarizer = pipeline(
             "summarization",
             model = "facebook/bart-large-cnn",
-            device = -1,
+            device = device,
             max_length=130,
-            min_length=30,
+            min_length=20,
             do_sample=False
         )
         self.logger = get_logger("transformers engine")
+
+        self.logger.info(f"Transformers Engine initialized on device: {device}")
 
     def _process_sentiment(self, text):
         try:
@@ -87,7 +91,7 @@ class TransformersEngine:
     def process_batch(self, reviews):
         self.logger.info(f"Processing {len(reviews)} reviews with transformers")
 
-        for review in tqdm(review, desc="NLP Processing"):
+        for review in tqdm(reviews, desc="NLP Processing"):
             if not review.get("is_valid", True):
                 self.logger.info("An invalid review did not go through NLP processing")
                 continue
@@ -95,7 +99,9 @@ class TransformersEngine:
             text = review["content"]
 
             # review sentiment
-            review["sentiment"] = self._process_sentiment(text)
+            sentiment_data = self._process_sentiment(text)
+            review["sentiment_score"] = sentiment_data["sentiment_score"]
+            review["sentiment_label"] = sentiment_data["sentiment_label"]
             
             # review emotion
             review["emotion_scores"] = self._process_emotions(text)
