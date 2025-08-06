@@ -1,11 +1,22 @@
+import subprocess
+import sys
 import spacy
 from spacy.matcher import Matcher
+from spacy import require_gpu
 from collections import Counter
 from src.utils.logger import get_logger
 
 class SpacyExtractor:
     def __init__(self):
-        self.nlp = spacy.load("en_core_web_sm")
+        self.logger = get_logger("spacy extractor")
+
+        try:
+            require_gpu()
+            self.logger.info("spaCy using GPU")
+        except:
+            self.logger.warning("spaCy GPU not available, using CPU")
+
+        self.nlp = self._load_nlp()
         self.matcher = Matcher(self.nlp.vocab)
         self.aspect_keywords = {
             "funding": ["funding", "challenge fee", "evaluation fee", 
@@ -25,7 +36,17 @@ class SpacyExtractor:
             "stability": ["crash", "bug", "glich", "lag", "freeze", "downtime"]
         }
         self._add_trading_patterns()
-        self.logger = get_logger("spacy extractor")
+    
+    def _load_nlp(self):
+        try:
+            nlp = spacy.load("en_core_web_sm")
+        except Exception as e:  
+            self.logger.info("=== downloading SpaCy English model === ")
+            subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+            self.logger.info("=== [SpaCy model] download successful ===")
+            nlp = spacy.load("en_core_web_sm")
+        
+        return nlp
 
     def _add_trading_patterns(self):
         instrument_pattern = [
@@ -127,7 +148,7 @@ class SpacyExtractor:
                         start = max(0, token.i - 5)
                         end = min(len(doc), token.i + 6)
                         context = doc[start:end].text
-                        sentiment = self._get_context_sentiment(doc[start:end])
+                        sentiment = self._get_contextual_sentiment(doc[start:end])
                         aspect_mentions.append({
                             "keyword": keyword,
                             "context": context,
