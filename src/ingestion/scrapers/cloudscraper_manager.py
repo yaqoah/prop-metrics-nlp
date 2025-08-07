@@ -2,11 +2,11 @@ import cloudscraper
 import re
 from bs4 import BeautifulSoup
 from parsers.trustpilot import Trustpilot
-from config.constants import REQUEST_TIMEOUT
+from utils.constants import REQUEST_TIMEOUT
 from utils.exceptions import ScrapingError
 import time
 from .base import Base
-from config.constants import *
+from utils.constants import *
 
 class Cloudscraper_Manager(Base):
     def __init__(self):

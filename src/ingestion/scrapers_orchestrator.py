@@ -7,7 +7,7 @@ from scrapers.cloudscraper_manager import Cloudscraper_Manager
 from scrapers.scrapy_manager import Scrapy_Manager
 from scrapers.selenium_scraper import Selenium_Scraper
 from api.data_models import Session
-from config.constants import *
+from utils.constants import *
 from src.utils.logger import get_logger
 
 class Scraper_Orchestrator:  

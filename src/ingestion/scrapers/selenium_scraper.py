@@ -6,7 +6,7 @@ import time
 from bs4 import BeautifulSoup
 from .base import Base
 from parsers.trustpilot import Trustpilot
-from config.constants import *
+from utils.constants import *
 from .selenium_pool import Selenium_Drivers_Pool
 
 class Selenium_Scraper(Base):

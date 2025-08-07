@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
-from config.constants import RATE_LIMIT, USER_AGENTS
+from utils.constants import RATE_LIMIT, USER_AGENTS
 import time
 from datetime import datetime
 import random
 from src.utils.logger import get_logger 
-from config.constants import USER_AGENTS 
+from utils.constants import USER_AGENTS 
 from middleware.proxy_rotator import Proxy_Rotator
 
 class Base(ABC):

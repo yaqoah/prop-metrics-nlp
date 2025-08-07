@@ -1,6 +1,6 @@
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from constants import IP_CHECK_URL, PROXY_TEST_TIMEOUT
+from utils.constants import IP_CHECK_URL, PROXY_TEST_TIMEOUT
 
 def test_proxy(proxy):
     try:

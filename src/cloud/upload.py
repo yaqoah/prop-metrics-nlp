@@ -1,6 +1,6 @@
 import zipfile
 import os
-from src.ingestion.config.constants import PARSED_DATA_PATH
+from src.utils.constants import PARSED_DATA_PATH
 
 def create_colab_package():
     

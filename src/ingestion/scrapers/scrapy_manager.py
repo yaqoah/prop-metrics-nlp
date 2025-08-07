@@ -7,7 +7,7 @@ from scrapy.crawler import CrawlerProcess
 import os
 from .base import Base
 from parsers.trustpilot import Trustpilot
-from config.constants import *
+from utils.constants import *
 from .scrapy_spider import Trustpilot_Spider
 from api.data_models import Review
 

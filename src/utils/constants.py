@@ -44,17 +44,12 @@ CHROME="C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
 
 # Data Storage
 RAW_DATA_PATH=Path("./config/data/raw")
-PARSED_DATA_PATH=Path("./config/data/parsed")
+PARSED_DATA_PATH=Path("./src/ingestion/config/data/parsed")
 CHECKPOINT_PATH=Path("./config/data/checkpoints")
-
-# Database Configuration 
-DATABASE_URL=os.getenv("DATABASE_URL")
-SUPABASE_URL=os.getenv("SUPABASE_URL")
-SUPABASE_KEY=os.getenv("SUPABASE_KEY")
 
 # Logging
 LOG_LEVEL="INFO"
-LOG_FILE_PATH=Path("./config/logs/scraper.log")
+LOG_FILE_PATH=Path("./src/utils/logs/analytics.log")
 LOG_MAX_SIZE=10485760
 LOG_BACKUP_COUNT=5
 

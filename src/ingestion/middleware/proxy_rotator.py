@@ -4,7 +4,7 @@ import time
 from threading import Lock
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from config.constants import *
+from utils.constants import *
 from src.utils.logger import get_logger
 from pathlib import Path
 

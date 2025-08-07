@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from contextlib import contextmanager
 from queue import Queue
-from config.constants import *
+from utils.constants import *
 
 class Selenium_Drivers_Pool():
     def __init__(self, max_drivers, proxy_rotator):

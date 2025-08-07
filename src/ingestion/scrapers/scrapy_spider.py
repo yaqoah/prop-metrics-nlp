@@ -3,7 +3,7 @@ import random
 from scrapy import Spider, Request
 from parsers.trustpilot import Trustpilot
 from bs4 import BeautifulSoup
-from config.constants import USER_AGENTS
+from utils.constants import USER_AGENTS
 
 class Trustpilot_Spider(Spider):
     name = "trustpilot"
