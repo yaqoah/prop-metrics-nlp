@@ -83,7 +83,7 @@ class DataValidator:
         for review in reviews:
             is_valid, validation_flags = self.validate_review(review)
             review["is_valid"] = is_valid
-            review["validation_flags"] = self.validate_flags
+            review["validation_flags"] = validation_flags
 
             validated_reviews.append(review)
         

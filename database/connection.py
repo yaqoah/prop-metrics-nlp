@@ -1,6 +1,7 @@
 import os
 import socket
 import psycopg2
+from dotenv import load_dotenv
 from database.schema import SCHEMA_SQL
 from supabase import create_client
 from psycopg2.pool import SimpleConnectionPool
@@ -12,6 +13,7 @@ from urllib.parse import urlparse
 
 class SupabaseConnection:
     def __init__(self):
+        load_dotenv()
         self.supabase_url = os.getenv("SUPABASE_URL")
         self.supabase_key = os.getenv("SUPABASE_KEY")
         self.client = create_client(self.supabase_url, self.supabase_key)
@@ -94,7 +96,7 @@ class SupabaseConnection:
             self.logger.info("Using Supabase client for bulk insert")
             
             # Process in batches for better performance
-            batch_size = 100
+            batch_size = 1000
             for i in range(0, len(reviews_data), batch_size):
                 batch = reviews_data[i:i+batch_size]
                 
@@ -139,7 +141,7 @@ class SupabaseConnection:
                     formatted_batch.append(formatted_review)
         
                 try:
-                    self.client.table('reviews').upsert(formatted_batch).execute()
+                    self.client.table('reviews').upsert(formatted_batch, on_conflict='review_id').execute()
                     self.logger.info(f"Inserted batch of {len(batch)} reviews")
                 except Exception as e:
                     self.logger.error(f"Failed to insert batch: {e}")
@@ -148,7 +150,7 @@ class SupabaseConnection:
                             if review.get("embedding") and len(str(review["embedding"])) > 50000:
                                 self.logger.warning(f"Embedding too large for review {review['review_id']}, skipping embedding")
                                 review["embedding"] = None    
-                            self.client.table('reviews').upsert(review).execute()
+                            self.client.table('reviews').upsert(review, on_conflict='review_id').execute()
                         except Exception as e2:
                             self.logger.error(f"Failed to insert review {review.get('review_id')}: {e2}")
             return
@@ -164,8 +166,26 @@ class SupabaseConnection:
                         topic_distribution, embedding
                     ) VALUES %s
                     ON CONFLICT (review_id) DO UPDATE SET
-                        processed_at = CURRENT_TIMESTAMP,
-                        processing_version = EXCLUDED.processing_version
+                        firm_name = EXCLUDED.firm_name,
+                        author_name = EXCLUDED.author_name,
+                        rating = EXCLUDED.rating,
+                        date_posted = EXCLUDED.date_posted,
+                        content = EXCLUDED.content,
+                        title = EXCLUDED.title,
+                        is_valid = EXCLUDED.is_valid,
+                        validation_flags = EXCLUDED.validation_flags,
+                        language = EXCLUDED.language,
+                        sentiment_score = EXCLUDED.sentiment_score,
+                        sentiment_label = EXCLUDED.sentiment_label,
+                        emotion_scores = EXCLUDED.emotion_scores,
+                        summary = EXCLUDED.summary,
+                        entities = EXCLUDED.entities,
+                        aspects = EXCLUDED.aspects,
+                        key_phrases = EXCLUDED.key_phrases,
+                        primary_topic_id = EXCLUDED.primary_topic_id,
+                        topic_distribution = EXCLUDED.topic_distribution,
+                        embedding = EXCLUDED.embedding,
+                        processed_at = CURRENT_TIMESTAMP
                 """
 
                 values = []
