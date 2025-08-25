@@ -1,0 +1,30 @@
+# Core Data Handling / Manipulation
+pandas>=2.0.0
+numpy>=1.24.0
+
+# User Interface
+dash>=3.2.0
+dash-bootstrap-components>=2.0.3
+plotly>=6.2.0
+
+# NLP Essentials
+transformers>=4.30.0
+torch>=2.0.0
+spacy>=3.5.0
+sentence-transformers>=2.2.0
+bertopic>=0.15.0
+
+# Database
+supabase>=2.0.0
+psycopg2-binary>=2.9.0
+pgvector>=0.2.0
+
+# Text Processing
+textblob>=0.17.0
+langdetect>=1.0.9
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.20.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.65.0
